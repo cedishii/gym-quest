@@ -46,11 +46,11 @@
       "url": "https://kenney.nl/assets/monster-builder-pack",
       "license": "CC0 1.0",
       "attributionRequired": false,
-      "attribution": "Pet art assembled from Kenney's Monster Builder Pack.",
+      "attribution": "Pet art built from Kenney's Monster Builder Pack (modified).",
       "files": [
         "assets/pets/"
       ],
-      "notes": "Assembled with tool/build_pets.dart."
+      "notes": "Assembled with tool/build_pets.dart, which also adds shading, a rim light and an outline."
     },
     {
       "id": "anime-portraits",
@@ -87,8 +87,34 @@
       "attributionRequired": false,
       "attribution": "Battle effects: Kenney Particle Pack.",
       "files": [
-        "assets/fx/"
+        "assets/fx/*.png"
       ]
+    },
+    {
+      "id": "kenney-smoke",
+      "title": "Smoke Particles",
+      "author": "Kenney (kenney.nl)",
+      "url": "https://kenney.nl/assets/smoke-particles",
+      "license": "CC0 1.0",
+      "attributionRequired": false,
+      "attribution": "Explosion, flash and smoke textures for attack effects: Kenney Smoke Particles.",
+      "files": [
+        "assets/fx/burst/"
+      ],
+      "notes": "Resized with tool/build_effects.dart."
+    },
+    {
+      "id": "sinestesia-explosions",
+      "title": "2D Explosion Animations #2",
+      "author": "Sinestesia",
+      "url": "https://opengameart.org/node/74923",
+      "license": "CC0 1.0",
+      "attributionRequired": false,
+      "attribution": "Ultimate attack explosions: Sinestesia (OpenGameArt).",
+      "files": [
+        "assets/fx/anim/"
+      ],
+      "notes": "Frames cropped and resized with tool/build_effects.dart."
     },
     {
       "id": "kenney-audio",

@@ -65,6 +65,9 @@ flutter:
     - assets/leaders/
     - assets/icons/
     - assets/fx/
+    - assets/fx/burst/
+    - assets/fx/anim/blast/
+    - assets/fx/anim/nova/
     - assets/audio/sfx/
     - assets/audio/music/
     - assets/credits/

@@ -12,6 +12,7 @@ import '../../../domain/map/stages.dart';
 import '../../../state/app_state.dart';
 import '../../theme/tokens.dart';
 import '../../widgets/bars.dart';
+import '../../widgets/battle_effects.dart';
 import '../../widgets/feedback.dart';
 import '../../widgets/game_icon.dart';
 import '../../widgets/pet_sprite.dart';
@@ -49,6 +50,9 @@ class _BattleScreenState extends State<BattleScreen>
   late final AnimationController _playerShake = _ctrl(380);
   late final AnimationController _enemyShake = _ctrl(380);
   late final AnimationController _fx = _ctrl(520);
+  late final AnimationController _screenFlash = _ctrl(500);
+  final List<_Impact> _impacts = [];
+  bool _precached = false;
   Side? _fxTarget;
   String _fxAsset = 'assets/fx/spark_05.png';
   Color _fxColor = Colors.white;
@@ -90,10 +94,20 @@ class _BattleScreenState extends State<BattleScreen>
       _playerShake,
       _enemyShake,
       _fx,
+      _screenFlash,
     ]) {
       c.dispose();
     }
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_precached) {
+      _precached = true;
+      precacheBattleEffects(context);
+    }
   }
 
   PetElement get _backdropElement =>
@@ -151,12 +165,9 @@ class _BattleScreenState extends State<BattleScreen>
       return;
     }
 
-    final elemental = e.action != BattleAction.strike;
-    _showFx(
-      target,
-      elemental ? _elementFx(attacker.element) : 'assets/fx/slash_03.png',
-      elemental ? Palette.element(attacker.element) : Colors.white,
-    );
+    final kind = impactKindFor(e.action);
+    setState(() => _impacts.add(_Impact(target, attacker.element, kind)));
+    if (kind == ImpactKind.ultimate) _screenFlash.forward(from: 0);
     app.sound.play(switch (e.action) {
       BattleAction.ultimate => Sfx.heavyHit,
       BattleAction.blast =>
@@ -193,14 +204,6 @@ class _BattleScreenState extends State<BattleScreen>
     });
     _fx.forward(from: 0);
   }
-
-  static String _elementFx(PetElement e) => switch (e) {
-    PetElement.fire => 'assets/fx/flame_04.png',
-    PetElement.water => 'assets/fx/twirl_02.png',
-    PetElement.leaf => 'assets/fx/magic_03.png',
-    PetElement.rock => 'assets/fx/dirt_02.png',
-    PetElement.neutral => 'assets/fx/star_06.png',
-  };
 
   Future<void> _finish() async {
     final app = context.appRead;
@@ -437,6 +440,56 @@ class _BattleScreenState extends State<BattleScreen>
                                 );
                               },
                             ),
+                          // Attack effects.
+                          for (final i in _impacts)
+                            Builder(
+                              builder: (context) {
+                                final onEnemy = i.side == Side.enemy;
+                                final size =
+                                    spriteSize *
+                                    (i.kind == ImpactKind.ultimate ? 1.8 : 1.3);
+                                final cx = onEnemy
+                                    ? w - w * 0.08 - spriteSize / 2
+                                    : w * 0.06 + spriteSize * 0.55;
+                                final cy = onEnemy
+                                    ? h * 0.30 - spriteSize * 0.4
+                                    : h - h * 0.04 - spriteSize * 0.5;
+                                return Positioned(
+                                  left: cx - size / 2,
+                                  top: cy - size / 2,
+                                  child: ImpactEffect(
+                                    key: i.key,
+                                    element: i.element,
+                                    kind: i.kind,
+                                    size: size,
+                                    onDone: () {
+                                      if (mounted) {
+                                        setState(() => _impacts.remove(i));
+                                      }
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          // Ultimate screen flash.
+                          Positioned.fill(
+                            child: IgnorePointer(
+                              child: AnimatedBuilder(
+                                animation: _screenFlash,
+                                builder: (context, _) {
+                                  final v = _screenFlash.value;
+                                  if (v == 0 || v == 1) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return ColoredBox(
+                                    color: Colors.white.withValues(
+                                      alpha: (1 - v) * 0.45,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
                           // Damage numbers.
                           for (final p in _popups)
                             _DamagePopup(
@@ -807,6 +860,15 @@ class _MoveButton extends StatelessWidget {
       ),
     );
   }
+}
+
+class _Impact {
+  _Impact(this.side, this.element, this.kind);
+
+  final Side side;
+  final PetElement element;
+  final ImpactKind kind;
+  final Key key = UniqueKey();
 }
 
 class _Popup {
