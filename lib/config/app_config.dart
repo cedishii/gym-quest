@@ -3,7 +3,7 @@ class AppConfig {
   const AppConfig._();
 
   static const appName = 'Gym Quest';
-  static const appVersion = '1.0.0';
+  static const appVersion = '1.1.0';
 
   /// Open Food Facts asks every client to identify itself as
   /// `AppName/Version (ContactEmail)`.

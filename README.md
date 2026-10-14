@@ -74,6 +74,9 @@ Bundled data and art are generated from free sources. Re-run these when changing
 | `dart run tool/build_pets.dart <Monster Builder PNG/Default>` | `assets/pets/*.png` |
 | `dart run tool/prepare_leaders.dart <AllAnime dir>` | `assets/leaders/*.png` |
 | `python tool/fetch_icons.py` | `assets/icons/*.svg` |
+| `dart run tool/build_effects.dart <Smoke Particles PNG> <Explosions Half Sized>` | `assets/fx/burst/`, `assets/fx/anim/` |
+| `dart run tool/prepare_branding.dart` then `dart run flutter_launcher_icons` | logo and launcher icons |
+| `python tool/build_credits.py` | `CREDITS.md` from the manifest |
 
 Every third-party asset and library, its license and attribution is listed in
 `assets/credits/asset_manifest.json` and shown on the in-app Credits screen.

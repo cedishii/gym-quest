@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.1.0 (2026-10-14)
+
+- **Music keeps playing in the lobby.** Sound effects used to take Android's
+  audio focus, which paused the music after the first button sound. Effects now
+  mix with the music, music comes back if it was stopped, and it pauses while
+  the app is in the background.
+- **Attack effects:** explosions, smoke bursts, sparks and shockwaves for every
+  attack, colored by element. Ultimates get a full explosion animation and a
+  screen flash.
+- **Livelier pets:** shading, rim light and an outline give the art depth. Pets
+  breathe, sway, hop now and then, cast a soft shadow, and glow with drifting
+  sparks of their element. The Fire pet now grins instead of frowning.
+- **New app logo** on the home screen icon and the welcome screen.
+
 ## 1.0.0 (2026-10-14)
 
 First release.
