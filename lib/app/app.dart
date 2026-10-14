@@ -28,9 +28,42 @@ class GymQuestApp extends StatelessWidget {
   }
 }
 
-/// Onboarding until a profile and pet exist, then the main tabs.
-class _Root extends StatelessWidget {
+/// Onboarding until a profile and pet exist, then the main tabs. Also
+/// pauses the music while the app is in the background.
+class _Root extends StatefulWidget {
   const _Root();
+
+  @override
+  State<_Root> createState() => _RootState();
+}
+
+class _RootState extends State<_Root> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final sound = context.appRead.sound;
+    switch (state) {
+      case AppLifecycleState.resumed:
+        sound.resumeFromBackground();
+      case AppLifecycleState.paused:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.detached:
+        sound.pauseForBackground();
+      case AppLifecycleState.inactive:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

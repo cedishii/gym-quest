@@ -32,8 +32,14 @@ enum Sfx {
 
 abstract class SoundService {
   void play(Sfx sfx);
+
+  /// Starts (or restarts) the background music if it is enabled.
   void startMusic();
   void stopMusic();
+
+  /// Pauses music while the app is in the background, and resumes it.
+  void pauseForBackground();
+  void resumeFromBackground();
   void configure({
     required bool music,
     required bool sfx,
@@ -52,6 +58,10 @@ class SilentSound implements SoundService {
   @override
   void stopMusic() {}
   @override
+  void pauseForBackground() {}
+  @override
+  void resumeFromBackground() {}
+  @override
   void configure({
     required bool music,
     required bool sfx,
@@ -63,7 +73,24 @@ class SilentSound implements SoundService {
 
 /// audioplayers-backed sound. Every call is fire-and-forget and swallows
 /// errors: a missing codec or blocked autoplay must never break the game.
+///
+/// Sound effects mix with the music instead of taking Android's audio
+/// focus. With the default focus mode each effect requested exclusive focus,
+/// which made Android pause the music after the first button sound.
 class GameSound implements SoundService {
+  GameSound() {
+    final mix = AudioContextConfig(focus: AudioContextConfigFocus.mixWithOthers)
+        .build();
+    for (final p in _pool) {
+      _guard(() => p.setAudioContext(mix));
+    }
+    _guard(() => _music.setReleaseMode(ReleaseMode.loop));
+    _music.onPlayerStateChanged.listen(
+      (state) => _musicState = state,
+      onError: (Object e) => debugPrint('sound: $e'),
+    );
+  }
+
   static const _musicAsset = 'audio/music/the_world_at_your_door.mp3';
 
   final AudioPlayer _music = AudioPlayer(playerId: 'music');
@@ -75,7 +102,11 @@ class GameSound implements SoundService {
   bool _musicOn = true;
   bool _sfxOn = true;
   double _volume = 0.45;
-  bool _musicPlaying = false;
+
+  /// True between startMusic and stopMusic (what the game wants).
+  bool _wantMusic = false;
+  bool _inBackground = false;
+  PlayerState _musicState = PlayerState.stopped;
 
   @override
   void configure({
@@ -92,7 +123,7 @@ class GameSound implements SoundService {
 
   @override
   void play(Sfx sfx) {
-    if (!_sfxOn) return;
+    if (!_sfxOn || _inBackground) return;
     final player = _pool[_next];
     _next = (_next + 1) % _pool.length;
     _guard(() async {
@@ -103,18 +134,34 @@ class GameSound implements SoundService {
 
   @override
   void startMusic() {
-    if (!_musicOn || _musicPlaying) return;
-    _musicPlaying = true;
+    if (!_musicOn) return;
+    _wantMusic = true;
+    if (_inBackground || _musicState == PlayerState.playing) return;
     _guard(() async {
-      await _music.setReleaseMode(ReleaseMode.loop);
-      await _music.play(AssetSource(_musicAsset), volume: _volume);
-    }, onError: () => _musicPlaying = false);
+      if (_musicState == PlayerState.paused) {
+        await _music.resume();
+      } else {
+        await _music.play(AssetSource(_musicAsset), volume: _volume);
+      }
+    });
   }
 
   @override
   void stopMusic() {
-    _musicPlaying = false;
+    _wantMusic = false;
     _guard(() => _music.stop());
+  }
+
+  @override
+  void pauseForBackground() {
+    _inBackground = true;
+    if (_musicState == PlayerState.playing) _guard(() => _music.pause());
+  }
+
+  @override
+  void resumeFromBackground() {
+    _inBackground = false;
+    if (_wantMusic) startMusic();
   }
 
   @override
@@ -125,15 +172,11 @@ class GameSound implements SoundService {
     }
   }
 
-  void _guard(Future<void> Function() action, {VoidCallback? onError}) {
+  void _guard(Future<void> Function() action) {
     try {
-      action().catchError((Object e) {
-        debugPrint('sound: $e');
-        onError?.call();
-      });
+      action().catchError((Object e) => debugPrint('sound: $e'));
     } catch (e) {
       debugPrint('sound: $e');
-      onError?.call();
     }
   }
 }

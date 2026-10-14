@@ -34,6 +34,9 @@ class _ShellState extends State<Shell> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      // Browsers block audio until the first tap; tab taps retry there.
+      context.appRead.sound.startMusic();
       final warning = context.appRead.loadWarning;
       if (warning != null && mounted) {
         ScaffoldMessenger.of(context)
