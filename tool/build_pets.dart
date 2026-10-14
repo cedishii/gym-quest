@@ -47,7 +47,7 @@ const designs = [
     leg: 'leg_redA',
     detail: 'detail_red_horn_small',
     eyes: 'eye_human_red',
-    mouth: 'mouth_closed_fangs',
+    mouth: 'mouthC',
   ),
   PetDesign(
     file: 'water',
@@ -190,12 +190,94 @@ img.Image build(PetDesign d) {
     by + body.height * 0.64 - mouth.height / 2,
   );
 
-  final trimmed = img.trim(canvas, mode: img.TrimMode.transparent);
+  final trimmed = outline(
+    shade(img.trim(canvas, mode: img.TrimMode.transparent)),
+  );
   // Pad to a square so every pet scales the same way in the UI.
   final side =
       (trimmed.width > trimmed.height ? trimmed.width : trimmed.height) + 24;
   final out = img.Image(width: side, height: side, numChannels: 4);
   place(out, trimmed, (side - trimmed.width) / 2, side - trimmed.height - 8);
+  return out;
+}
+
+// ------------------------------------------------------------- depth --
+// Kenney's parts are flat-coloured. These passes add volume (CC0 allows
+// modification): light from the top-left, shadow toward the bottom, a soft
+// rim light, and a dark outline so the pet reads on any background.
+
+/// Top-to-bottom light falloff plus a left-to-right tint, and a rim light
+/// along the top-left edges.
+img.Image shade(img.Image src) {
+  final out = img.Image.from(src);
+  final w = src.width, h = src.height;
+  bool solid(int x, int y) =>
+      x >= 0 && y >= 0 && x < w && y < h && src.getPixel(x, y).a > 40;
+  for (var y = 0; y < h; y++) {
+    for (var x = 0; x < w; x++) {
+      final p = src.getPixel(x, y);
+      if (p.a == 0) continue;
+      final ty = y / h, tx = x / w;
+      // 1.12 at the top-left down to ~0.62 at the bottom-right.
+      var f = 1.12 - 0.42 * ty * ty - 0.10 * tx;
+      // Rim light: pixels whose upper-left neighbours are empty.
+      if (!solid(x - 4, y - 4) || !solid(x, y - 5)) f += 0.22;
+      // Contact shadow where parts overlap (just below a transparent gap).
+      out.setPixelRgba(
+        x,
+        y,
+        (p.r * f).clamp(0, 255).toInt(),
+        (p.g * f).clamp(0, 255).toInt(),
+        (p.b * f).clamp(0, 255).toInt(),
+        p.a.toInt(),
+      );
+    }
+  }
+  return out;
+}
+
+/// Adds a dark outline (the sprite's own average colour, darkened) around
+/// every opaque pixel.
+img.Image outline(img.Image src, {int thickness = 4}) {
+  const pad = 6;
+  final w = src.width + pad * 2, h = src.height + pad * 2;
+  var r = 0.0, g = 0.0, b = 0.0, n = 0;
+  for (final p in src) {
+    if (p.a < 200) continue;
+    r += p.r;
+    g += p.g;
+    b += p.b;
+    n++;
+  }
+  final ink = n == 0
+      ? img.ColorRgba8(20, 16, 30, 255)
+      : img.ColorRgba8(
+          (r / n * 0.28).round(),
+          (g / n * 0.28).round(),
+          (b / n * 0.28).round(),
+          255,
+        );
+  final out = img.Image(width: w, height: h, numChannels: 4);
+  for (var y = 0; y < h; y++) {
+    for (var x = 0; x < w; x++) {
+      var hit = false;
+      for (var dy = -thickness; dy <= thickness && !hit; dy++) {
+        for (var dx = -thickness; dx <= thickness && !hit; dx++) {
+          if (dx * dx + dy * dy > thickness * thickness) continue;
+          final sx = x - pad + dx, sy = y - pad + dy;
+          if (sx >= 0 &&
+              sy >= 0 &&
+              sx < src.width &&
+              sy < src.height &&
+              src.getPixel(sx, sy).a > 60) {
+            hit = true;
+          }
+        }
+      }
+      if (hit) out.setPixel(x, y, ink);
+    }
+  }
+  img.compositeImage(out, src, dstX: pad, dstY: pad);
   return out;
 }
 
