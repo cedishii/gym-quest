@@ -1,0 +1,144 @@
+name: gym_rpg
+description: "Gym Quest - a personal fitness tracker with a pet RPG."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.5
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  flutter_svg: ^2.3.0
+  shared_preferences: ^2.5.6
+  path_provider: ^2.1.6
+  http: ^1.6.0
+  audioplayers: ^6.8.1
+  intl: ^0.20.3
+  cupertino_icons: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^6.0.0
+  image: ^4.12.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/data/
+    - assets/pets/
+    - assets/leaders/
+    - assets/icons/
+    - assets/fx/
+    - assets/audio/sfx/
+    - assets/audio/music/
+    - assets/credits/
+    # Exercise photos (one folder per exercise; regenerate with tool/build_exercises.py)
+    - assets/exercises/Ab_Roller/
+    - assets/exercises/Arnold_Dumbbell_Press/
+    - assets/exercises/Band_Pull_Apart/
+    - assets/exercises/Barbell_Bench_Press_-_Medium_Grip/
+    - assets/exercises/Barbell_Curl/
+    - assets/exercises/Barbell_Deadlift/
+    - assets/exercises/Barbell_Hip_Thrust/
+    - assets/exercises/Barbell_Squat/
+    - assets/exercises/Bench_Dips/
+    - assets/exercises/Bent_Over_Barbell_Row/
+    - assets/exercises/Bicycling_Stationary/
+    - assets/exercises/Bodyweight_Squat/
+    - assets/exercises/Bodyweight_Walking_Lunge/
+    - assets/exercises/Butt_Lift_Bridge/
+    - assets/exercises/Cat_Stretch/
+    - assets/exercises/Chest_Stretch_on_Stability_Ball/
+    - assets/exercises/Childs_Pose/
+    - assets/exercises/Chin-Up/
+    - assets/exercises/Crunches/
+    - assets/exercises/Dead_Bug/
+    - assets/exercises/Dips_-_Triceps_Version/
+    - assets/exercises/Dumbbell_Bench_Press/
+    - assets/exercises/Dumbbell_Bicep_Curl/
+    - assets/exercises/Dumbbell_Lunges/
+    - assets/exercises/Dumbbell_Step_Ups/
+    - assets/exercises/Elliptical_Trainer/
+    - assets/exercises/Face_Pull/
+    - assets/exercises/Fast_Skipping/
+    - assets/exercises/Flat_Bench_Lying_Leg_Raise/
+    - assets/exercises/Freehand_Jump_Squat/
+    - assets/exercises/Goblet_Squat/
+    - assets/exercises/Hammer_Curls/
+    - assets/exercises/Hamstring_Stretch/
+    - assets/exercises/Hanging_Leg_Raise/
+    - assets/exercises/Incline_Dumbbell_Press/
+    - assets/exercises/Incline_Push-Up/
+    - assets/exercises/Inverted_Row/
+    - assets/exercises/Jogging_Treadmill/
+    - assets/exercises/Kettlebell_One-Legged_Deadlift/
+    - assets/exercises/Leg_Press/
+    - assets/exercises/Lying_Leg_Curls/
+    - assets/exercises/Mountain_Climbers/
+    - assets/exercises/One-Arm_Dumbbell_Row/
+    - assets/exercises/One-Arm_Kettlebell_Swings/
+    - assets/exercises/Plank/
+    - assets/exercises/Pullups/
+    - assets/exercises/Push-Ups_With_Feet_Elevated/
+    - assets/exercises/Pushups/
+    - assets/exercises/Romanian_Deadlift/
+    - assets/exercises/Rope_Jumping/
+    - assets/exercises/Rowing_Stationary/
+    - assets/exercises/Russian_Twist/
+    - assets/exercises/Seated_Cable_Rows/
+    - assets/exercises/Seated_Dumbbell_Press/
+    - assets/exercises/Side_Bridge/
+    - assets/exercises/Side_Lateral_Raise/
+    - assets/exercises/Split_Squat_with_Dumbbells/
+    - assets/exercises/Standing_Dumbbell_Press/
+    - assets/exercises/Standing_Dumbbell_Triceps_Extension/
+    - assets/exercises/Standing_Hip_Circles/
+    - assets/exercises/Standing_Military_Press/
+    - assets/exercises/Star_Jump/
+    - assets/exercises/Step_Mill/
+    - assets/exercises/Stiff-Legged_Dumbbell_Deadlift/
+    - assets/exercises/Trail_Running_Walking/
+    - assets/exercises/Triceps_Pushdown/
+    - assets/exercises/Walking_Treadmill/
+    - assets/exercises/Wide-Grip_Lat_Pulldown/
+    - assets/exercises/Worlds_Greatest_Stretch/
+  fonts:
+    - family: Fredoka
+      fonts:
+        - asset: assets/fonts/Fredoka.ttf
