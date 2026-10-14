@@ -39,6 +39,9 @@ class ProfileDraft {
   double? _parse(TextEditingController c) =>
       double.tryParse(c.text.trim().replaceAll(',', '.'));
 
+  /// Drops a field's error once the user edits it; true if one was removed.
+  bool clearError(String field) => errors.remove(field) != null;
+
   /// Validates the body fields; returns true when valid.
   bool validateBody() {
     errors = Profile.validate(
@@ -95,6 +98,9 @@ class BodyFields extends StatelessWidget {
             errorText: e['name'],
             counterText: '',
           ),
+          onChanged: (_) {
+            if (draft.clearError('name')) onChanged();
+          },
         ),
         const SizedBox(height: Space.md),
         const Text(
@@ -124,6 +130,9 @@ class BodyFields extends StatelessWidget {
                 label: 'Age',
                 suffix: 'yrs',
                 error: e['age'],
+                onChanged: () {
+                  if (draft.clearError('age')) onChanged();
+                },
                 decimals: false,
               ),
             ),
@@ -135,6 +144,9 @@ class BodyFields extends StatelessWidget {
                 label: 'Height',
                 suffix: 'cm',
                 error: e['height'],
+                onChanged: () {
+                  if (draft.clearError('height')) onChanged();
+                },
               ),
             ),
             const SizedBox(width: Space.sm),
@@ -145,6 +157,9 @@ class BodyFields extends StatelessWidget {
                 label: 'Weight',
                 suffix: 'kg',
                 error: e['weight'],
+                onChanged: () {
+                  if (draft.clearError('weight')) onChanged();
+                },
               ),
             ),
           ],
@@ -305,6 +320,7 @@ class _NumberField extends StatelessWidget {
     required this.suffix,
     this.error,
     this.decimals = true,
+    this.onChanged,
   });
 
   final TextEditingController controller;
@@ -312,6 +328,7 @@ class _NumberField extends StatelessWidget {
   final String suffix;
   final String? error;
   final bool decimals;
+  final VoidCallback? onChanged;
 
   @override
   Widget build(BuildContext context) => TextField(
@@ -329,5 +346,6 @@ class _NumberField extends StatelessWidget {
       errorText: error,
       errorMaxLines: 2,
     ),
+    onChanged: (_) => onChanged?.call(),
   );
 }
