@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ^3.13.5
@@ -52,6 +52,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
   image: ^4.12.0
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -68,6 +69,7 @@ flutter:
     - assets/fx/burst/
     - assets/fx/anim/blast/
     - assets/fx/anim/nova/
+    - assets/branding/logo.png
     - assets/audio/sfx/
     - assets/audio/music/
     - assets/credits/
@@ -145,3 +147,14 @@ flutter:
     - family: Fredoka
       fonts:
         - asset: assets/fonts/Fredoka.ttf
+
+# Launcher icons from the app crest (see tool/prepare_branding.dart).
+# Regenerate with: dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/branding/icon_square.png
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: assets/branding/icon_adaptive_foreground.png
+  remove_alpha_ios: true
+  min_sdk_android: 24

@@ -220,28 +220,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Column(
             children: [
               const Spacer(),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PetSprite(
-                    element: PetElement.leaf,
-                    level: 1,
-                    size: 96,
-                    fixedScale: 0.9,
-                  ),
-                  PetSprite(
-                    element: PetElement.fire,
-                    level: 1,
-                    size: 120,
-                    fixedScale: 0.95,
-                  ),
-                  PetSprite(
-                    element: PetElement.water,
-                    level: 1,
-                    size: 96,
-                    fixedScale: 0.9,
-                  ),
-                ],
+              ClipOval(
+                child: Image.asset(
+                  'assets/branding/logo.png',
+                  width: 260,
+                  height: 260,
+                  filterQuality: FilterQuality.medium,
+                ),
               ),
               const SizedBox(height: Space.xl),
               Text(
