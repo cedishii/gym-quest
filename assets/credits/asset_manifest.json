@@ -1,0 +1,188 @@
+{
+  "about": "Every third-party asset and library used by the app, where it came from, and its license. Shown on the in-app Credits screen and in CREDITS.md. Update this file whenever something is added.",
+  "sources": [
+    {
+      "id": "usda-fdc",
+      "title": "FoodData Central, SR Legacy (April 2018)",
+      "author": "U.S. Department of Agriculture, Agricultural Research Service",
+      "url": "https://fdc.nal.usda.gov/",
+      "license": "CC0 1.0 (public domain)",
+      "attributionRequired": false,
+      "attribution": "Nutrition data: USDA FoodData Central (fdc.nal.usda.gov).",
+      "files": [
+        "assets/data/foods_usda.json"
+      ],
+      "notes": "Built with tool/build_usda_foods.py. USDA asks to be credited as the source."
+    },
+    {
+      "id": "open-food-facts",
+      "title": "Open Food Facts (online lookups, not bundled)",
+      "author": "Open Food Facts contributors",
+      "url": "https://world.openfoodfacts.org/",
+      "license": "ODbL 1.0 (database), DbCL (contents)",
+      "attributionRequired": true,
+      "attribution": "Product data from Open Food Facts (openfoodfacts.org), ODbL.",
+      "files": [],
+      "notes": "Read-only API. Rate limits: 15 product reads/min, 10 searches/min per IP. Search runs only on submit, never as-you-type."
+    },
+    {
+      "id": "free-exercise-db",
+      "title": "free-exercise-db",
+      "author": "yuhonas and contributors",
+      "url": "https://github.com/yuhonas/free-exercise-db",
+      "license": "Unlicense (public domain)",
+      "attributionRequired": false,
+      "attribution": "Exercise data and photos: free-exercise-db by yuhonas.",
+      "files": [
+        "assets/data/exercises.json",
+        "assets/exercises/"
+      ],
+      "notes": "69 exercise subset, built with tool/build_exercises.py. MET values added from the Compendium of Physical Activities (estimates)."
+    },
+    {
+      "id": "kenney-monster-builder",
+      "title": "Monster Builder Pack",
+      "author": "Kenney (kenney.nl)",
+      "url": "https://kenney.nl/assets/monster-builder-pack",
+      "license": "CC0 1.0",
+      "attributionRequired": false,
+      "attribution": "Pet art assembled from Kenney's Monster Builder Pack.",
+      "files": [
+        "assets/pets/"
+      ],
+      "notes": "Assembled with tool/build_pets.dart."
+    },
+    {
+      "id": "anime-portraits",
+      "title": "Anime Girl and Boy Portraits",
+      "author": "stevenburrow",
+      "url": "https://opengameart.org/content/anime-girl-and-boy-portraits",
+      "license": "CC0 1.0",
+      "attributionRequired": false,
+      "attribution": "Gym leader portraits by stevenburrow (OpenGameArt).",
+      "files": [
+        "assets/leaders/"
+      ],
+      "notes": "Trimmed and resized with tool/prepare_leaders.dart."
+    },
+    {
+      "id": "game-icons",
+      "title": "game-icons.net",
+      "author": "Lorc, Delapouite, Sbed, John Redman, Skoll, Carl Olsen, Zeromancer",
+      "url": "https://game-icons.net/",
+      "license": "CC BY 3.0 (Zeromancer: CC0)",
+      "attributionRequired": true,
+      "attribution": "Icons by Lorc, Delapouite, Sbed, John Redman, Skoll, Carl Olsen and Zeromancer, available on https://game-icons.net under CC BY 3.0.",
+      "files": [
+        "assets/icons/"
+      ],
+      "notes": "Fetched with tool/fetch_icons.py; per-author icon list in assets/icons/_authors.json. Background removed so icons can be tinted (allowed by CC BY)."
+    },
+    {
+      "id": "kenney-particles",
+      "title": "Particle Pack",
+      "author": "Kenney (kenney.nl)",
+      "url": "https://kenney.nl/assets/particle-pack",
+      "license": "CC0 1.0",
+      "attributionRequired": false,
+      "attribution": "Battle effects: Kenney Particle Pack.",
+      "files": [
+        "assets/fx/"
+      ]
+    },
+    {
+      "id": "kenney-audio",
+      "title": "Interface Sounds, Impact Sounds, RPG Audio, Music Jingles",
+      "author": "Kenney (kenney.nl)",
+      "url": "https://kenney.nl/assets/category:Audio",
+      "license": "CC0 1.0",
+      "attributionRequired": false,
+      "attribution": "Sound effects and jingles: Kenney.",
+      "files": [
+        "assets/audio/sfx/"
+      ],
+      "notes": "OGG files: supported on Android and in Chrome; iOS would need MP3/M4A copies."
+    },
+    {
+      "id": "music-world-at-your-door",
+      "title": "\"The World At Your Door\" (RPG Orchestral Essentials)",
+      "author": "Jonathan Shaw",
+      "url": "https://opengameart.org/node/108343",
+      "license": "CC BY 3.0 / RPG Orchestral Essentials EULA (attribution required)",
+      "attributionRequired": true,
+      "attribution": "\"The World At Your Door\" Composed by Jonathan Shaw (www.jshaw.co.uk)",
+      "files": [
+        "assets/audio/music/the_world_at_your_door.mp3"
+      ]
+    },
+    {
+      "id": "fredoka",
+      "title": "Fredoka",
+      "author": "The Fredoka Project Authors",
+      "url": "https://github.com/hafontia/Fredoka-One",
+      "license": "SIL Open Font License 1.1",
+      "attributionRequired": true,
+      "attribution": "Fredoka font, SIL Open Font License 1.1.",
+      "files": [
+        "assets/fonts/Fredoka.ttf",
+        "assets/fonts/OFL-Fredoka.txt"
+      ]
+    }
+  ],
+  "software": [
+    {
+      "name": "Flutter & Dart",
+      "author": "The Flutter and Dart authors (Google)",
+      "license": "BSD 3-Clause",
+      "url": "https://flutter.dev"
+    },
+    {
+      "name": "flutter_svg",
+      "author": "Dan Field and contributors",
+      "license": "MIT",
+      "url": "https://pub.dev/packages/flutter_svg"
+    },
+    {
+      "name": "audioplayers",
+      "author": "Blue Fire",
+      "license": "MIT",
+      "url": "https://pub.dev/packages/audioplayers"
+    },
+    {
+      "name": "shared_preferences",
+      "author": "The Flutter Authors",
+      "license": "BSD 3-Clause",
+      "url": "https://pub.dev/packages/shared_preferences"
+    },
+    {
+      "name": "path_provider",
+      "author": "The Flutter Authors",
+      "license": "BSD 3-Clause",
+      "url": "https://pub.dev/packages/path_provider"
+    },
+    {
+      "name": "http",
+      "author": "The Dart project authors",
+      "license": "BSD 3-Clause",
+      "url": "https://pub.dev/packages/http"
+    },
+    {
+      "name": "intl",
+      "author": "The Dart project authors",
+      "license": "BSD 3-Clause",
+      "url": "https://pub.dev/packages/intl"
+    },
+    {
+      "name": "cupertino_icons",
+      "author": "Vladimir Kharlampidi",
+      "license": "MIT",
+      "url": "https://pub.dev/packages/cupertino_icons"
+    },
+    {
+      "name": "image (build tools only)",
+      "author": "Brendan Duncan",
+      "license": "MIT",
+      "url": "https://pub.dev/packages/image"
+    }
+  ]
+}

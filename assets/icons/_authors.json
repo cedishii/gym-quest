@@ -1,0 +1,84 @@
+{
+ "Carl Olsen": {
+  "license": "CC BY 3.0",
+  "icons": [
+   "flame"
+  ]
+ },
+ "Delapouite": {
+  "license": "CC BY 3.0",
+  "icons": [
+   "backpack",
+   "biceps",
+   "carrot",
+   "chest",
+   "chest-armor",
+   "diamond-ring",
+   "flag",
+   "gauntlet",
+   "leather-armor",
+   "power-ring",
+   "ring",
+   "star-medal",
+   "steak",
+   "swords-power",
+   "weight-lifting"
+  ]
+ },
+ "John Redman": {
+  "license": "CC BY 3.0",
+  "icons": [
+   "el-rock"
+  ]
+ },
+ "Lorc": {
+  "license": "CC BY 3.0",
+  "icons": [
+   "barbute",
+   "book",
+   "boots",
+   "breastplate",
+   "castle",
+   "crested-helmet",
+   "crossed-swords",
+   "crown",
+   "el-leaf",
+   "el-neutral",
+   "fist",
+   "footprint",
+   "gem-pendant",
+   "laurels",
+   "leather-boot",
+   "lightning",
+   "meat",
+   "medal",
+   "run",
+   "stone-tower",
+   "treasure-map",
+   "trophy",
+   "visored-helm",
+   "walking-boot"
+  ]
+ },
+ "Sbed": {
+  "license": "CC BY 3.0",
+  "icons": [
+   "el-fire",
+   "el-water",
+   "shield"
+  ]
+ },
+ "Skoll": {
+  "license": "CC BY 3.0",
+  "icons": [
+   "fruit-bowl",
+   "open-chest"
+  ]
+ },
+ "Zeromancer": {
+  "license": "CC0",
+  "icons": [
+   "heart-plus"
+  ]
+ }
+}
